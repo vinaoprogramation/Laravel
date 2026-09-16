@@ -18,4 +18,17 @@ class ApiHealthCheckTest extends TestCase
             'status'=>'online',
         ]);
     }
+
+    public function test_rate_limiting_bloqueia_excesso_de_requisicoes()
+    {
+
+        for ($i = 0; $i < 10; $i++){
+            $this->getJson('/api/health')->assertStatus(200);
+        }
+
+        $response = $this->getJson('/api/health');
+
+        $response->assertStatus(429);
+
+    }
 }
