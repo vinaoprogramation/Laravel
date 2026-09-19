@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
+use App\Http\Resources\ProductResource;
 use App\Http\Requests\StoreProductRequest;    
 use App\Models\Product;
 
 class StoreProductController extends Controller
 {
-    public function __invoke(StoreProductRequest $request): JsonResponse
+    public function __invoke(StoreProductRequest $request): ProductResource
     {
-        $validated = $request->validated();
+        $product = Product::create($request->validated());
 
-        $product = Product::create($validated);
-
-        return response()->json([
-            'message' => 'Produto cadastrado com sucesso',
-            'data' => $validated
-        ], 201);
+        return new ProductResource($product);
     }
 }

@@ -33,6 +33,15 @@ class StoreProductTest extends TestCase
         ]);
 
         $response->assertStatus(201);
+
+        $response->assertJson([
+            'data' => [
+                'name' => 'Teclado Gamer',
+                'sku' => 'KB-123',
+                'price' => 250.00,
+                'formatted_price' => 'R$250,00',
+            ]
+        ]);
             
         $this->assertDatabaseHas('products', [
             'name' => 'Teclado Gamer',
