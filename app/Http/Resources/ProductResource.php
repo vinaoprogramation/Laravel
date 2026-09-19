@@ -18,7 +18,10 @@ class ProductResource extends JsonResource
             'formatted_price' => 'R$' . number_format($this->price, 2, ',' , '.'),
 
             'created_at' => $this->created_at->toIso8601String(),
-            
+
+            //CASO DE ENVIO DE DADOS PARA ADMIN
+            //'cost_price' => $this->when($request->user()?->isAdmin(), $this->cost_price),
+
         ];
     }
 }

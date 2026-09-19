@@ -13,7 +13,10 @@ class StoreProductTest extends TestCase
     use RefreshDatabase;
     public function test_rejeita_dados_ausentes_ou_invalidos()
     {
-        $response = $this->postJson('/api/products', [
+
+        $user = \App\Models\User::factory()->create();
+
+        $response = $this->actingAs($user)->postJson('/api/products', [
             'name'=> '',
             'sku'=> 'sku invalido com espaco',
             'price' => -10
@@ -26,7 +29,10 @@ class StoreProductTest extends TestCase
 
     public function test_higieniza_e_aceita_dados_validos()
     {
-        $response = $this->postJson('/api/products', [
+
+        $user = \App\Models\User::factory()->create();
+
+        $response = $this->actingAs($user)->postJson('/api/products', [
             'name' => '<h1>Teclado Gamer</h1>',
             'sku' => 'kb-123 ',
             'price' => 250.00,
